@@ -7,6 +7,7 @@ defmodule FizzBuzzTest do
 
       assert FizzBuzz.build("numbers.txt") == expected_response
     end
+
     test "when a invalid file is provided, returns an error" do
       expected_response = {:error, "Error reading the file due to: enoent"}
 
