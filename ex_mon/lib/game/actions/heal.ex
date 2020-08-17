@@ -7,6 +7,7 @@ defmodule ExMon.Game.Actions.Heal do
   def heal_player(player) do
     player
     |> Game.fetch_player()
+    |> Map.get(:life)
     |> calculate_total_life()
     |> set_life(player)
   end
