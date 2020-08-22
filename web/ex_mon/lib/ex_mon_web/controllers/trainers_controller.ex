@@ -8,6 +8,11 @@ defmodule ExMonWeb.TrainersController do
     |> ExMon.create_trainer()
     |> handle_response(conn, "create.json", :created)
   end
+  def update(conn, params) do
+    params
+    |> ExMon.update_trainer()
+    |> handle_response(conn, "update.json", :ok)
+  end
 
   def delete(conn, %{"id" => id}) do
     id
