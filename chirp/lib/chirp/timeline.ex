@@ -18,7 +18,7 @@ defmodule Chirp.Timeline do
 
   """
   def list_posts do
-    Repo.all(Post)
+    Repo.all(from p in Post, order_by: [desc: p.id])
   end
 
   @doc """
@@ -102,6 +102,22 @@ defmodule Chirp.Timeline do
   """
   def change_post(%Post{} = post, attrs \\ %{}) do
     Post.changeset(post, attrs)
+  end
+
+  def inc_likes(%Post{id: id}) do
+    {1, [post]} =
+      from(p in Post, where: p.id == ^id, select: p)
+      |> Repo.update_all(inc: [like_counts: 1])
+
+    broadcast({:ok, post}, :post_updated)
+  end
+
+  def inc_reposts(%Post{id: id}) do
+    {1, [post]} =
+      from(p in Post, where: p.id == ^id, select: p)
+      |> Repo.update_all(inc: [reposts_count: 1])
+
+    broadcast({:ok, post}, :post_updated)
   end
 
   def subscribe do
