@@ -10,7 +10,7 @@ defmodule ExMon.Trainer do
     field :name, :string
     field :password_hash, :string
     field :password, :string, virtual: true
-    has_many(:pokemon, Pokemon)
+    has_many(:pokemons, Pokemon)
     timestamps()
   end
 
@@ -36,5 +36,6 @@ defmodule ExMon.Trainer do
   defp put_pass_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
     change(changeset, Argon2.add_hash(password))
   end
+
   defp put_pass_hash(changeset), do: changeset
 end

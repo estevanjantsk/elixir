@@ -8,17 +8,14 @@ defmodule ExMonWeb.Router do
   scope "/api", ExMonWeb do
     pipe_through :api
 
-    resources "/trainers", TrainersController
+    resources "/trainers", TrainersController, only: [:create, :show, :delete, :update]
+
+    resources "/trainer_pokemon", TrainerPokemonsController,
+      only: [:create, :show, :delete, :update]
+
     get "/pokemons/:name", PokemonsController, :show
   end
 
-  # Enables LiveDashboard only for development
-  #
-  # If you want to use the LiveDashboard in production, you should put
-  # it behind authentication and allow only admins to access it.
-  # If your application does not have an admins-only section yet,
-  # you can use Plug.BasicAuth to set up some basic authentication
-  # as long as you are also using SSL (which you should anyway).
   if Mix.env() in [:dev, :test] do
     import Phoenix.LiveDashboard.Router
 
