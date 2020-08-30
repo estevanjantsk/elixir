@@ -1,5 +1,6 @@
 defmodule ExMonWeb.Controllers.TrainersCOntrollerTest do
   use ExMonWeb.ConnCase
+  import ExMonWeb.Auth.Guardian
 
   alias ExMon.Trainer
 
