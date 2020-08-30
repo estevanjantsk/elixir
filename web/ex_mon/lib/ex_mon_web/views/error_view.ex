@@ -17,10 +17,15 @@ defmodule ExMonWeb.ErrorView do
   end
 
   def render("400.json", %{result: %Ecto.Changeset{} = result}) do
-    %{ message: translate_errors(result) }
+    %{message: translate_errors(result)}
   end
-  def render("400.json", %{result: message }) do
-    %{ message: message }
+
+  def render("400.json", %{result: message}) do
+    %{message: message}
+  end
+
+  def render("401.json", %{message: message}) do
+    %{message: message}
   end
 
   defp translate_errors(changeset) do
