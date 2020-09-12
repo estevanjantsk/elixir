@@ -1,0 +1,13 @@
+/_build/
+/assets/node_modules/
+/deps/
+/doc/
+/priv/static/
+/test/
+/tmp/
+/cover/
+/.fetch
+erl_crash.dump
+*.ez
+docker_phx-*.tar
+npm-debug.log

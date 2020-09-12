@@ -1,13 +1,26 @@
 FROM elixir:latest
 
-# Create app directory and copy the Elixir projects into it
-RUN mkdir /app
-COPY . /app
 WORKDIR /app
 
-# Install hex package manager
-# By using --force, we don’t need to type “Y” to confirm the installation
-RUN mix local.hex --force
+RUN apt-get update \
+  && curl -sL https://deb.nodesource.com/setup_13.x | bash \
+  && apt-get install -y apt-utils \
+  && apt-get install -y nodejs \
+  && apt-get install -y build-essential \
+  && apt-get install -y inotify-tools \
+  && mix local.hex --force \
+  && mix local.rebar --force
 
-# Compile the project
-RUN mix do compile
+COPY . .
+
+RUN mix do deps.get, compile
+
+RUN cd ./assets \
+  && npm install \
+  && ./node_modules/webpack/bin/webpack.js --mode production \
+  && cd .. \
+  && mix phx.digest
+
+EXPOSE 4000
+
+CMD ["mix", "phx.server"]
