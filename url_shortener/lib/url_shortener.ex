@@ -1,4 +1,14 @@
 defmodule URLShortener do
+  use GenServer
+
+  def start_link(opts \\ []) do
+    GenServer.start(__MODULE__, :ok, opts)
+  end
+
+  def init(:ok) do
+    {:ok, %{}}
+  end
+
   def start do
     spawn(__MODULE__, :loop, [%{}])
   end
