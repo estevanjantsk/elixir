@@ -3,10 +3,8 @@ defmodule URLShortener do
 
   # Client API
   def start_link(opts \\ []), do: GenServer.start(__MODULE__, :ok, opts)
-
-  def stop(pid) do
-    GenServer.cast(pid, :stop)
-  end
+  def stop(pid), do: GenServer.cast(pid, :stop)
+  def shorten(pid, url), do: GenServer.cast(pid, {:shorten, url})
 
   # GenServer callbacks
   def init(:ok), do: {:ok, %{}}
@@ -15,31 +13,9 @@ defmodule URLShortener do
     {:stop, :normal, state}
   end
 
-  def start do
-    spawn(__MODULE__, :loop, [%{}])
-  end
-
-  def loop(state) do
-    receive do
-      {:stop, caller} ->
-        send(caller, "Shutting down.")
-
-      {:shorten, url, caller} ->
-        url_md5 = md5(url)
-        new_state = Map.put(state, url_md5, url)
-        send(caller, url_md5)
-        loop(new_state)
-
-      {:get, md5, caller} ->
-        send(caller, Map.fetch(state, md5))
-        loop(state)
-
-      :flush ->
-        loop(%{})
-
-      _ ->
-        loop(state)
-    end
+  def handle_call({:shorten, url}, _from, state) do
+    short = md5(url)
+    {:reply, short, Map.put(state, short, url)}
   end
 
   defp md5(url) do
