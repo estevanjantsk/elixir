@@ -5,7 +5,6 @@ defmodule PollerDal.Questions.Question do
   schema "questions" do
     field(:description, :string)
     belongs_to(:district, PollerDal.Districts.District)
-    has_many(:choices, PollerDal.Choices.Choice)
 
     timestamps()
   end
