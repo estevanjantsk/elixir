@@ -1,0 +1,33 @@
+<h1>Poll Questions for <%= @district.name %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="2">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for question <- @questions do %>
+      <tr>
+        <td><%= question.description %></td>
+        <td>
+          <%= link to: Routes.choice_path(@conn, :index, @district.id, question.id) do %>
+            <i class="fas fa-list-ul"></i>
+          <% end %>          
+          <%= link to: Routes.question_path(@conn, :edit, @district.id, question) do %>
+            <i class="far fa-edit"></i>
+          <% end %>
+          <%= link to: Routes.question_path(@conn, :delete, @district.id, question), 
+            method: :delete, 
+            data: [confirm: "Are you sure?"] do %>
+            <i class="fas fa-trash"></i>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div>
+  <%= link "New Question", to: Routes.question_path(@conn, :new, @district.id), class: "btn" %>
+  <%= link "Back", to: Routes.district_path(@conn, :index), class: "btn-white" %>
+</div>
