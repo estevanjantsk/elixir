@@ -28,4 +28,19 @@ defmodule PhxSaas.AccountsFixtures do
     [_, token | _] = String.split(captured_email.text_body, "[TOKEN]")
     token
   end
+
+  @doc """
+  Generate a account.
+  """
+  def account_fixture(attrs \\ %{}) do
+    {:ok, account} =
+      attrs
+      |> Enum.into(%{
+        name: "some name",
+        personal: true
+      })
+      |> PhxSaas.Accounts.create_account()
+
+    account
+  end
 end

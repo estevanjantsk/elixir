@@ -9,10 +9,10 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
-## Learn more
+### Teams Feature with Phx.Gen.Auth
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+#### TODO
+
+  - [ ] Create the accounts table with the option to be personal
+  - [ ] Update user logic to have a personal account created on registration
+  - [ ] Add a members table that acts as a many to many relationship between users and accounts
