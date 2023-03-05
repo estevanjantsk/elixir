@@ -392,9 +392,10 @@ defmodule PhxSaas.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_account(attrs \\ %{}) do
+  def create_account(user, attrs \\ %{}) do
     %Account{}
     |> Account.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:created_by, user)
     |> Repo.insert()
   end
 

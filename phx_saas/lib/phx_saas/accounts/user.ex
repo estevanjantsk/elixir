@@ -8,6 +8,8 @@ defmodule PhxSaas.Accounts.User do
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
 
+    has_one :personal_account, PhxSaas.Accounts.Account, foreign_key: :created_by_user_id
+
     timestamps()
   end
 
